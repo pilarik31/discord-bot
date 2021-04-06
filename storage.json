@@ -1,0 +1,12 @@
+{
+    "test": "testing",
+    "helloworld_result": "Hello there!",
+    "roll_result": "{0} rolled {1}.",
+    "shutdown_result": "Shutting.. down...",
+    "joinaudio_nochannel": "User must be in voice channel, or a voice channel must be passed as argument.",
+    "purge_notpositive": "The amount of messages to remove must be positive.",
+    "purge_emptydelete": "Nothing to delete.",
+    "purge_result": "Done. Removed {0} {1}.",
+    "messages_singular": "message",
+    "messages_plural": "messages"
+}
