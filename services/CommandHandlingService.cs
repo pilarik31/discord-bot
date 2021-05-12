@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using ModeratorBot.Data;
 using MySql.Data.MySqlClient;
-using Victoria;
 
 namespace ModeratorBot.Services
 {
@@ -18,7 +16,7 @@ namespace ModeratorBot.Services
         private readonly DiscordSocketClient _discord;
         private readonly CommandService _commands;
         private IServiceProvider _provider;
-        private MySqlConnection _database;
+        private Database _database;
 
         /// <summary>
         /// Command handling service.
@@ -27,7 +25,7 @@ namespace ModeratorBot.Services
             IServiceProvider provider,
             DiscordSocketClient discord,
             CommandService commands,
-            MySqlConnection database
+            Database database
         )
         {
             _discord = discord;
@@ -74,7 +72,7 @@ namespace ModeratorBot.Services
             {
                 await context.Channel.SendMessageAsync(result.ToString());
             }
-            //_ = UpdateLevelAsync(context);
+            await UpdateLevelAsync(context);
         }
 
         /// <summary>
@@ -82,34 +80,9 @@ namespace ModeratorBot.Services
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        private Task UpdateLevelAsync(SocketCommandContext context)
+        private async Task UpdateLevelAsync(SocketCommandContext context)
         {
-            _database.Open();
-            string sql = $"SELECT * FROM user WHERE user_id={context.User.Id}";
-            MySqlCommand cmd = new MySqlCommand(sql, _database);
-            MySqlDataReader reader = cmd.ExecuteReader();
-
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    _database.Close();
-                }
-
-            }
-            else
-            {
-                _database.Close();
-                _database.Open();
-                sql = $"INSERT INTO `user` (`user_id`, `nick`, `points`) VALUES ('{context.User.Id}', '{context.User.Username}', '0');";
-                MySqlCommand insertCmd = new MySqlCommand(sql, _database);
-                insertCmd.ExecuteNonQuery();
-                _database.Close();
-
-            }
-            _database.Clone();
-
-            return Task.CompletedTask;
+            await _database.UpdateLevel(context.User.Id, context.User.Username);
         }
     }
 }

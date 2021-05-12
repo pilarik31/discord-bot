@@ -4,8 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Discord;
-using Discord.Commands;
-using Discord.WebSocket;
 using Discord.Audio;
 
 namespace ModeratorBot.Services

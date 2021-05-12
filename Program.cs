@@ -7,8 +7,6 @@ using Discord;
 using Discord.WebSocket;
 using Discord.Commands;
 using ModeratorBot.Services;
-using LiteDB;
-using MySql.Data.MySqlClient;
 
 namespace ModeratorBot
 {
@@ -18,9 +16,6 @@ namespace ModeratorBot
     public class ModeratorBot
     {
         private DiscordSocketClient _client;
-        //private CommandService _commands;
-        //private CommandHandler _handler;
-        //private Storage _storage;
         private IConfiguration _config;
 
         
@@ -63,8 +58,7 @@ namespace ModeratorBot
                 .AddSingleton<LogService>()
                 .AddSingleton(_config)
                 .AddSingleton<Storage>()
-                .AddSingleton(new LiteDatabase("bot.db"))
-                .AddSingleton(new MySqlConnection("server=localhost;user=admin;database=discord-bot;port=3306;password=admin"))
+                .AddSingleton<Database>()
                 .BuildServiceProvider();
         }
         

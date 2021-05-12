@@ -19,9 +19,9 @@ namespace ModeratorBot.Modules
         /// <summary>
         /// Constructor
         /// </summary>
-        public Administrator()
+        public Administrator(Storage storage)
         {
-            _storage = new Storage();
+            _storage = storage;
         }
 
         /// <summary>

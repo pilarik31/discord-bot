@@ -1,16 +1,16 @@
 using System.Threading.Tasks;
 using Discord.Commands;
-using MySql.Data.MySqlClient;
+using ModeratorBot.Services;
 
 namespace ModeratorBot.Modules
 {
     ///
     public class Points : ModuleBase<SocketCommandContext>
     {
-        private MySqlConnection _database;
+        private Database _database;
 
         ///
-        public Points(MySqlConnection database)
+        public Points(Database database)
         {
             _database = database;
         }
@@ -18,27 +18,8 @@ namespace ModeratorBot.Modules
         [Command("balance")]
         private async Task BalanceAsync()
         {
-            try
-            {
-                _database.Open();
-                string sql = $"SELECT points FROM user WHERE user_id =  {Context.User.Id}";
-                MySqlCommand cmd = new MySqlCommand(sql, _database);
-                MySqlDataReader reader = cmd.ExecuteReader();
+            await ReplyAsync($"Your balance is: {_database.GetBalance(Context.User.Id)}");
 
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        await ReplyAsync($"Your balance is: {reader.GetInt32(0).ToString()}");
-                    }
-                }
-                _database.Close();
-            }
-            catch (System.Exception)
-            {
-                
-                throw;
-            }
         }
     }
 }
