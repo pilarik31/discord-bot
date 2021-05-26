@@ -1,5 +1,3 @@
-.PHONY: stan cs cbf decache doc help up
-
 default: build
 
 help: ## Help
@@ -7,3 +5,4 @@ help: ## Help
 
 build: ## Build project.
 	dotnet build -r win-x64 -c Release
+	dotnet build -r linux-x64 -c Release

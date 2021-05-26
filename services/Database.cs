@@ -11,7 +11,7 @@ namespace ModeratorBot.Services
         ///
         public Database()
         {
-            _database = new MySqlConnection("server=localhost;user=admin;database=discord-bot;port=3306;password=admin");
+            _database = new MySqlConnection("server=localhost;user=root;database=discord-bot;port=3306;password=root");
         }
 
         ///
@@ -70,7 +70,10 @@ namespace ModeratorBot.Services
 
         private async void InserNewUser(ulong userId, string username)
         {
-            await _database.OpenAsync();
+            if (_database.State == System.Data.ConnectionState.Closed)
+            {
+                await _database.OpenAsync();
+            }
             string sql = $"INSERT INTO `user` (`user_id`, `nick`, `points`) VALUES ('{userId}', '{username}', '0');";
             MySqlCommand insertCmd = new MySqlCommand(sql, _database);
             await insertCmd.ExecuteNonQueryAsync();
