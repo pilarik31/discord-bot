@@ -58,7 +58,7 @@ namespace ModeratorBot.Services
             {
                 //await Log(LogSeverity.Debug, $"Starting playback of {path} in {guild.Name}");
                 var output = CreateStream(filePath).StandardOutput.BaseStream;
-                var stream = client.CreatePCMStream(AudioApplication.Music);
+                var stream = client.CreatePCMStream(AudioApplication.Voice);
                 await output.CopyToAsync(stream);
                 await stream.FlushAsync().ConfigureAwait(false);
             }
