@@ -32,7 +32,9 @@ namespace ModeratorBot.Services
 
         private ILoggerFactory ConfigureLogging(ILoggerFactory factory)
         {
-            factory.AddConsole();
+            factory = LoggerFactory.Create(builder => {
+                builder.AddConsole();
+            });
             return factory;
         }
 
