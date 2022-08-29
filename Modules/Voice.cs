@@ -21,6 +21,7 @@ namespace ModeratorBot.Modules
         }
         ///
         [Command("join", RunMode = RunMode.Async)]
+        [Summary("Joins the voice channel.")]
         public async Task JoinChannel()
         {
             await _audioService.JoinAudioAsync(Context.Guild, (Context.User as IVoiceState).VoiceChannel);

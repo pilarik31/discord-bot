@@ -72,6 +72,8 @@ namespace ModeratorBot.Services
             {
                 await context.Channel.SendMessageAsync(result.ToString());
             }
+
+
             //await UpdateLevelAsync(context);
         }
 
